@@ -1,5 +1,11 @@
-# WhereIs Server Repository(Updating...)
+# "슬기로운 공부생활" 서버 파트 저장소
 
-## 어디야 서버팀 저장소입니다.
+## Table of Contents
 
-## [개발문서](https://github.com/1th-TeamAlgo/1th-whereis-server/wiki)
+1. ㅇㅇㅇ
+2. ㅇㅇㅇ
+3. ㅇㅇㅇ
+
+## Specialy Issues
+
+ㅇㅇㅇ
