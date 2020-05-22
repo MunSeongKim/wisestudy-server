@@ -20,6 +20,8 @@ RUN mkdir -p /home/apps \
  && mkdir -p /home/temp \
  && chown nobody:nobody /home/temp
 
+WORKDIR ${SRC_DIR}
+
 # DRPM epel 저장소 설치
 RUN yum provides '*/applydeltarpm' \
  && yum install -y --quiet --setopt=tsflags=nodocs deltarpm epel-release \
@@ -40,38 +42,41 @@ RUN yum install -y --quiet --setopt=tsflags=nodocs gcc make gcc-c++ libxslt-deve
 # Upgrade version of python 2 > 3
 RUN yum install -y --quiet --setopt=tsflags=nodocs https://repo.ius.io/ius-release-el7.rpm
 RUN yum install -y --quiet --setopt=tsflags=nodocs python36u python36u-devel python36u-libs python36u-pip
-RUN cd ${SRC_DIR} \
- && wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate \
+RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate \
  && python3.6 get-pip.py \
  && echo -e "\nalias python='\/usr\/bin\/python3'" >> /etc/bashrc
 
 # Install Nginx with compile
 ## Install pcre 8.36
-RUN cd ${SRC_DIR} \
- && wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.gz \
+RUN wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.gz \
  && tar -zxf pcre-8.44.tar.gz
 RUN cd ${SRC_DIR}/pcre-8.44 \
  && ./configure --prefix=/usr/local \
  && make && make install
 ## Install zlib 1.2.8
-RUN cd ${SRC_DIR} \
- && wget http://www.zlib.net/zlib-1.2.11.tar.gz \
+RUN wget http://www.zlib.net/zlib-1.2.11.tar.gz \
  && tar -zxf zlib-1.2.11.tar.gz
 RUN cd ${SRC_DIR}/zlib-1.2.11 \
  && ./configure --prefix=/usr/local \
  && make && make install
 ## Install nginx
-RUN cd ${SRC_DIR} \
- && wget http://nginx.org/download/nginx-1.17.10.tar.gz \
+RUN wget http://nginx.org/download/nginx-1.17.10.tar.gz \
  && tar -zxf nginx-1.17.10.tar.gz
 RUN cd ${SRC_DIR}/nginx-1.17.10 \
  && ./configure --prefix=/home/apps/nginx1_17 --with-openssl=/usr/bin \
  && make && make install
 
 # Install MySQL
-RUN cd ${SRC_DIR} \
- && wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm \
- && rpm -Uvh mysql80-community-release-el7-3.noarch.rpm \
- && yum-config-manager --disable mysql80-community \
- && yum-config-manager --enable mysql57-community
-RUN yum install -y --quiet --setopt=tsflags=nodocs mysql-community-server
+RUN wget http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql-community-common-5.7.20-1.el7.x86_64.rpm \
+ && wget http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql-community-libs-5.7.20-1.el7.x86_64.rpm \
+ && wget http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql-community-client-5.7.20-1.el7.x86_64.rpm \
+ && wget http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql-community-server-5.7.20-1.el7.x86_64.rpm
+RUN yum install -y libaio net-tools libnuma*
+RUN rpm -ivh mysql-community-common-5.7.20-1.el7.x86_64.rpm \
+ && rpm -ivh mysql-community-libs-5.7.20-1.el7.x86_64.rpm \
+ && rpm -ivh mysql-community-client-5.7.20-1.el7.x86_64.rpm \
+ && rpm -ivh mysql-community-server-5.7.20-1.el7.x86_64.rpm
+RUN echo -e "\nuser=mysql" >> /etc/my.cnf \
+ && /usr/sbin/mysqld --initialize-insecure
+
+CMD ['/usr/sbin/mysqld &']
