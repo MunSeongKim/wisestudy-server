@@ -65,6 +65,7 @@ RUN wget http://nginx.org/download/nginx-1.17.10.tar.gz \
 RUN cd ${SRC_DIR}/nginx-1.17.10 \
  && ./configure --prefix=/home/apps/nginx1_17 --with-openssl=/usr/bin \
  && make && make install
+RUN ln -s /home/apps/nginx1_17/sbin/nginx /usr/sbin/nginx
 
 # Install MySQL
 RUN wget http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/mysql-community-common-5.7.20-1.el7.x86_64.rpm \
@@ -79,4 +80,10 @@ RUN rpm -ivh mysql-community-common-5.7.20-1.el7.x86_64.rpm \
 RUN echo -e "\nuser=mysql" >> /etc/my.cnf \
  && /usr/sbin/mysqld --initialize-insecure
 
-CMD ['/usr/sbin/mysqld &']
+# Set working directory
+WORKDIR /home
+
+# Mount volume 생성
+VOLUME /home/wisestudy
+
+EXPOSE 80 3306
