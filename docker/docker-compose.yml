@@ -17,7 +17,7 @@ services:
     hostname: wisestudy-local
     volumes:
       - "../shell:/home/shell"
-      #- "../python:/home/wisestudy"
+      - "../server:/home/wisestudy"
     command:
       - /home/shell/init.sh
 
