@@ -10,7 +10,7 @@ jobs:
   build:
     name: Docker build and push to docker registry
     # 작업이 실행될 가상환경
-    runs-on: centos-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
