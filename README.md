@@ -2,7 +2,8 @@
 
 ## Table of Contents
 
-1. How to use Docker
+1. [How to use Docker](/wisestudy/wisestudy-server/wiki/How-to-use-Docker)
+2. [Database modeling](/wisestudy/wisestudy-server/wiki/Database-modeling)
 
 ## Specialy Issues
 
