@@ -4,7 +4,7 @@
 
 1. [How to use Docker](/wisestudy/wisestudy-server/wiki/How-to-use-Docker)
 2. [Database modeling](/wisestudy/wisestudy-server/wiki/Database-modeling)
-3. [Django to MySQL interlocking](/wisestudy/wisestudy-server/wiki/Django-to-MySQL-interlocking)
+3. [Django to MySQL interlocking](/)
 ## Specialy Issues
 
 - 
