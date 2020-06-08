@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.0.4 # This is the action
+        with:
+          heroku_api_key: "64c09ca8-6e83-4365-bde0-e7a7fa35edfd"
+          heroku_app_name: "wisestudy-stage" #Must be unique in Heroku
+          heroku_email: "chyin370@naver.com"
+          branch: "master" #OPTIONAL and DEFAULT - 'HEAD' (a.k.a your current branch)
+          dontuseforce: false #OPTIONAL and DEFAULT - false
+          usedocker: false #OPTIONAL and DEFAULT - false
+          appdir: "server" #OPTIONAL and DEFAULT - "". This is useful if the api you're deploying is in a subfolder
+          docker_heroku_process_type: "web" #OPTIONAL and DEFAULT - "web"
