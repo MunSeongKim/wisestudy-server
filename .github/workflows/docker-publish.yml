@@ -1,0 +1,25 @@
+name: Docker image publishing # Workflow name
+
+# Event trigger: docker branch로 pull request 요청하면 이벤트 실행
+on:
+  pull_request:
+    branches: [ docker ]
+
+# 작업 순서 설정
+jobs:
+  build:
+    name: Docker build and push to docker registry
+    # 작업이 실행될 가상환경
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: chyin370
+          password: $eong1docker
+          registry: chyin370/wisestudy
+          tags: latest
+          path: ./docker
+          key: -t, chyin370/wisestudy:latest

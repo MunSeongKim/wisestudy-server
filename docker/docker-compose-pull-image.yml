@@ -16,10 +16,7 @@ services:
           - local.wisestudy.com
     hostname: wisestudy-local
     volumes:
-      - "../shell:/home/shell"
       - "../server:/home/wisestudy"
-    command:
-      - /home/shell/init.sh
 
 networks:
   frontend:
