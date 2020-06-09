@@ -1,0 +1,63 @@
+# Global environments
+spring:
+  profiles:
+    active: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+
+---
+
+spring:
+  profiles: local
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/wisestudy
+    username: wisestudy
+    password: wise$tudy
+    initialization-mode: always
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+
+  hibernate:
+    ddl-auto: create
+    format_sql: true
+
+logging:
+  level:
+    web: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+---
+
+spring:
+  profiles: stage
+
+  datasource:
+    url: jdbc:mysql://us-cdbr-east-05.cleardb.net/heroku_ee35b034c0668c1?reconnect=true
+    username: b40cdb08ac98a7
+    password: fef08cda
+
+  hibernate:
+    format_sql: true
+    ddl-auto: update
+
+logging:
+  level:
+    root: INFO
+    org.hibernate:
+      SQL: ERROR
+      type.descriptor.sql.BasicBinder: TRACE

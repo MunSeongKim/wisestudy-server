@@ -126,7 +126,7 @@
 					</includes>
 					<jdkVersion>${java.version}</jdkVersion>
 					<processTypes>
-						<web>java -jar ${full-artifact-name}</web>
+						<web>java -jar -Dspring.profiles.active=stage ${full-artifact-name}</web>
 					</processTypes>
 				</configuration>
 			</plugin>
