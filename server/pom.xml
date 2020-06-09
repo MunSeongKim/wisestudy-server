@@ -85,7 +85,6 @@
 	</dependencies>
 
 	<build>
-
 		<plugins>
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
@@ -129,7 +128,7 @@
 					</includes>
 					<jdkVersion>${java.version}</jdkVersion>
 					<processTypes>
-						<web>java $JAVA_OPTS -jar ${full-artifact-name}</web>
+						<web>java -jar ${full-artifact-name}</web>
 					</processTypes>
 				</configuration>
 			</plugin>
