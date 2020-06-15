@@ -1,16 +1,16 @@
 package com.wisestudy.user.domain;
 
-import com.fasterxml.jackson.annotation.*;
-import com.wisestudy.category.domain.Category;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.wisestudy.user.domain.enumerate.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -25,6 +25,7 @@ import java.util.List;
         "cellPhone",
         "gender"
 })
+@JsonRootName("user")
 public class User {
 
     @Id
@@ -44,15 +45,14 @@ public class User {
 
     @Column(name = "birthday")
     @JsonProperty("birthday")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime birth;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
 
     @Column(name = "cell_phone", nullable = false, length = 20)
     private String cellPhone;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "enum('F', 'M')")
+    @Column(nullable = false, columnDefinition = "enum('FEMALE', 'MALE')")
     private Gender gender;
 
 //    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)

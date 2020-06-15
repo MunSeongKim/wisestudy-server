@@ -1,15 +1,12 @@
 package com.wisestudy.user;
 
-import com.wisestudy.user.domain.User;
+import com.wisestudy.user.domain.Users;
 import com.wisestudy.user.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -38,7 +35,7 @@ public class UserDomainTest {
 
     @Test
     public void selectUserOne() {
-        List<User> users = repository.findAll();
+        Users users = repository.findAll();
         assertNotNull(users);
     }
 }

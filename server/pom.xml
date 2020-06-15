@@ -21,6 +21,45 @@
 		<full-artifact-name>target/${project.artifactId}-${project.version}.jar</full-artifact-name>
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<activatedProfile>local</activatedProfile>
+			</properties>
+		</profile>
+		<profile>
+			<id>stage</id>
+			<properties>
+				<activatedProfile>stage</activatedProfile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.heroku.sdk</groupId>
+						<artifactId>heroku-maven-plugin</artifactId>
+						<version>3.0.2</version>
+						<configuration>
+							<appName>wisestudy-stage</appName>
+							<includeTarget>false</includeTarget>
+							<includes>
+								<include>${basedir}/${full-artifact-name}</include>
+							</includes>
+							<jdkVersion>${java.version}</jdkVersion>
+							<processTypes>
+								<web>java $JAVA_OPTS -jar -Dprofile=${activatedProfile} ${full-artifact-name}</web>
+							</processTypes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -112,23 +151,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>3.0.2</version>
-				<configuration>
-					<appName>wisestudy-stage</appName>
-					<includeTarget>false</includeTarget>
-					<includes>
-						<include>${basedir}/${full-artifact-name}</include>
-					</includes>
-					<jdkVersion>${java.version}</jdkVersion>
-					<processTypes>
-						<web>java -jar -Dspring.profiles.active=stage ${full-artifact-name}</web>
-					</processTypes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
